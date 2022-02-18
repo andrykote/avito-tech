@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Modal />
+    <Modal @getId='logId' />
 
     <footer>
       <div class="line"></div>
@@ -20,6 +20,11 @@ export default {
   data() {
     return {
       yearNow: new Date().getFullYear(),
+    }
+  },
+  methods: {
+    logId(id) {
+        console.log(id, 'from app vue')
     }
   }
 };

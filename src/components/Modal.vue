@@ -8,7 +8,7 @@
         :src="item.url"
         :key="item.id"
         alt="img"
-        @click="getArg"
+        @click="getArg(item.id)"
       />
     </div>
   </div>
@@ -24,8 +24,9 @@ export default {
   },
 
   methods: {
-    getArg() {
-      console.log(this.imgArrLinks);
+    getArg(id) {
+      this.$emit('getId', id);
+      console.log(id, 'from modal screen');
     },
   },
 
