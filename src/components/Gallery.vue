@@ -1,5 +1,5 @@
 <template>
-  <div class="gallery-box">
+  <div class="gallery-box"  >
     <h1>Test App</h1>
     <div class="gallery">
       <img
@@ -11,7 +11,7 @@
         @click="createModal(item.id)" 
       />
     </div>
-    <Modal :imgId='targetImgId' v-if="modalShow" @closeModal="closeModal" />
+    <Modal :imgeId='targetImgId' v-if="modalShow" @closeModal="closeModal"/>
   </div>
 </template>
 
@@ -36,7 +36,6 @@ export default {
     createModal(id) {
       this.modalShow = true;
       this.targetImgId = id;
-      console.log(this.targetImgId);
     },
 
     closeModal() {
