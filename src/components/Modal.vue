@@ -1,79 +1,72 @@
 <template>
-  <div class="modal-box">
-    <h1>Test App</h1>
-    <div class="gallery">
-      <img
-        class="gallery-item"
-        v-for="item in imgArrLinks"
-        :src="item.url"
-        :key="item.id"
-        alt="img"
-        @click="getArg(item.id)"
-      />
+  <div class="modal" @click="closeModal">
+    <div class="modal-container">
+      <img class="modal-img" :src="url" alt="img" />
+      <div
+        class="modal-comment"
+        v-for="(comment, index) in comments"
+        :key="index"
+      >
+        <p>{{ comments[index].text }}</p>
+        <p>{{ comments[index].date }}</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "Modal",
+  props: {
+    imgId: Number,
+  },
+
   data() {
     return {
-      imgArrLinks: [],
+      url: null,
+      comments: [],
     };
   },
 
   methods: {
-    getArg(id) {
-      this.$emit('getId', id);
-      console.log(id, 'from modal screen');
+    closeModal(event) {
+      if (!event.target.closest(".modal-container")) {
+        this.$emit("closeModal", false);
+      }
     },
   },
 
-  mounted() {
-    this.imgArrLinks = fetch(
-      "https://boiling-refuge-66454.herokuapp.com/images"
-    )
-      .then((response) => response.json())
-      .then((data) => (this.imgArrLinks = data));
-
-    console.log(this.imgArrLinks);
+  beforeMount() {
+    fetch(`https://boiling-refuge-66454.herokuapp.com/images/${this.imgId}`)
+      .then((data) => data.json())
+      .then((item) => {
+        this.url = item.url;
+        this.comments = item.comments;
+      });
   },
 };
 </script>
 
-<style scoped lang="scss">
-.modal-box {
-  max-width: 728px;
-  margin: 0 auto;
-}
-
-h1 {
-  margin-bottom: 30px;
-  text-align: center;
-  font-size: 36px;
-  line-height: 42px;
-}
-.gallery {
+<style lang="scss" scoped>
+.modal {
+  position: absolute;
   display: flex;
-  width: 100%;
-  flex-wrap: wrap;
-  row-gap: 20px;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  &-item {
-    width: 229px;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  &-img {
+    margin: 0 auto;
   }
 
-  @media (max-width: 687px) {
-    & {
-      justify-content: center;
-
-      &-item {
-        width: 280px;
-        margin-bottom: 20px;
-      }
-    }
+  &-comment {
+    font-size: 20px;
   }
 }
 </style>

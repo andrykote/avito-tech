@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Modal @getId='logId' />
+    <Gallery/>
 
     <footer>
       <div class="line"></div>
@@ -10,23 +10,18 @@
 </template>
 
 <script>
-import Modal from "./components/Modal";
+import Gallery from "./components/Gallery";
 
 export default {
   name: "App",
   components: {
-    Modal,
+    Gallery,
   },
   data() {
     return {
       yearNow: new Date().getFullYear(),
     }
   },
-  methods: {
-    logId(id) {
-        console.log(id, 'from app vue')
-    }
-  }
 };
 </script>
 
@@ -41,10 +36,17 @@ $base-color: #ccc;
   font-family: "Roboto", sans-serif;
 }
 
-html,
+html {
+  height: 100%;
+  padding: 0;
+}
 body {
   height: 100%;
   padding: 15px 20px 10px;
+}
+
+body {
+    position: relative;
 }
 #app {
   display: flex;
